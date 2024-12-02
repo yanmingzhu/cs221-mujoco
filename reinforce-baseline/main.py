@@ -21,11 +21,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    seed = 1
-    if args.seed is not None:
-        seed = args.seed
-    print(f"seed = {seed}")
-
     mode = "train"
     if args.mode is not None:
         mode = args.mode

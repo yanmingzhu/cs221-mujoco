@@ -75,7 +75,7 @@ class ValueNetwork(nn.Module):
 class Agent:
     def __init__(self, state_space_dims: int, action_space_dims: int):
         self.learning_rate = 1e-4 
-        self.gamma = 0.997 
+        self.gamma = 0.995
         self.eps = np.finfo(np.float32).eps.item()
 
         self.probs = []  
