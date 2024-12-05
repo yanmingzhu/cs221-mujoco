@@ -121,7 +121,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["train", "run"],
+        choices=["train", "play"],
         help="",        
     )
     parser.add_argument(
@@ -132,8 +132,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     mode = "train"
-    if args.mode == "run":
-        mode = "run"
+    if args.mode == "play":
+        mode = "play"
     
     print(args.weights)
     weights = None
