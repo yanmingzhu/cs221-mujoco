@@ -53,7 +53,7 @@ def train_agent(seed = 89, max_steps = 1000000):
     
     torch.save(agent.net.state_dict(), './models/hopper')
 
-    plotRewards(rewards_to_plot, [])
+    plotRewards(rewards_to_plot, './charts/plot')
     return rewards_over_episodes
 
 def replay_agent():
@@ -92,26 +92,22 @@ def replay_agent():
             avg_episode_len = int(np.mean(wrapped_env.length_queue))
             print("Episode:", episode, "Average Reward:", avg_reward, "average episode len: ", avg_episode_len)
 
-    plotRewards([], rewards_to_plot)
+    plotRewards(rewards_to_plot, './charts/plot')
 
 def movingAverage(x, window):
     cumSum = np.cumsum(x)
     ma = (cumSum[window:] - cumSum[:-window]) / window
     return ma
 
-def plotRewards(trainRewards, evalRewards, savePath=None, show=True):
+def plotRewards(rewards, savePath=None, show=True):
     plt.figure(figsize=(10, 5))
     window = 30
-    trainMA = movingAverage(trainRewards, window)
-    evalMA = movingAverage(evalRewards, window)
-    tLen = len(trainRewards)
-    eLen = len(evalRewards)
-    plt.scatter(range(tLen), trainRewards, alpha=0.5, c='tab:blue', linewidth=0, s=5)
+    trainMA = movingAverage(rewards, window)
+    tLen = len(rewards)
+    plt.scatter(range(tLen), rewards, alpha=0.5, c='tab:blue', linewidth=0, s=5)
     plt.plot(range(int(window/2), tLen-int(window/2)), trainMA, lw=2, c='b')
-    plt.scatter(range(tLen, tLen+eLen), evalRewards, alpha=0.5, c='tab:green', linewidth=0, s=5)
-    plt.plot(range(tLen+int(window/2), tLen+eLen-int(window/2)), evalMA, lw=2, c='darkgreen')
-    plt.legend(['train rewards', 'train moving average', 'eval rewards', 'eval moving average'])
-    plt.xlabel("Episode")
+    plt.legend(['rewards', 'rewards moving average'])
+    plt.xlabel("100 Episode")
     plt.ylabel("Discounted Reward in Episode")
 
     if savePath is not None:
